@@ -116,12 +116,12 @@ I report here some training results for comparison.
 
 ### Training charts
 
-![Training accuracy](./results/training_accuracy_1.svg)
+![Training accuracy](./results/training_accuracy_1.png)
 
-![Training AUC](./results/training_AUC_1.svg)
+![Training AUC](./results/training_AUC_1.png)
 
 ### Test charts
 
-![Test accuracy](./results/test_accuracy_1.svg)
+![Test accuracy](./results/test_accuracy_1.png)
 
-![Test AUC](./results/test_AUC_1.svg)
+![Test AUC](./results/test_AUC_1.png)
