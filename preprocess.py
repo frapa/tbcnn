@@ -3,7 +3,6 @@ import sys
 import numpy as np
 import scipy.misc
 import skimage.transform
-import skimage.exposure
 
 def remove_border(img, threshold=0):
     "Crop image, throwing away the border below the threshold"
