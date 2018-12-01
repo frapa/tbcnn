@@ -1,10 +1,20 @@
-# Convolutional neural network for tuberculosis diagnosis
+# Tuberculosis diagnosis with a CNN
 
 This repo contains the implementation of the convolutional neural network
-for tuberculosis diagnosis described in [paper is coming, hepefully :-)].
-The network uses frontal chest X-Rays images as input.
+for tuberculosis diagnosis described in [paper is coming, hepefully :-)],
+which I will call tbcnn for short. The network uses frontal chest X-Rays
+images as input.
 
-## How to get it to work
+## Requirements
+
+To run it properly:
+
+ * 8 GB of RAM.
+ * A nvdia GPU with cuda support (even a cheap one).
+
+Training on CPU will be *very* slow.
+
+## Get it to work
 
 First clone the repo to your preferred location:
 
@@ -29,7 +39,7 @@ sudo apt install cuda9.0 cuda-cublas-9-0 cuda-cufft-9-0 cuda-curand-9-0 \
     libnccl2=2.2.13-1+cuda9.0 cuda-command-line-tools-9-0
 
 # tensorflow
-# CPU only (training will take forever)
+# CPU only (training will take forever, like 1/2 hour per epoch)
 pip3 install --user tensorflow
 # you need a nvidia GPU with CUDA support
 pip3 install --user tensorflow-gpu
@@ -42,6 +52,12 @@ pip3 install --user scipy
 
 # skimage
 pip3 install --user skimage
+
+# SimpleITK
+pip3 install --user SimpleITK
+
+# tensorboard for real time visualization
+pip3 install --user tensorboard
 ```
 
 Once we have installed the needed dependencies, we need to download the
@@ -68,8 +84,44 @@ If you want to run a cross-validation study (5-fold), you can run:
 python3 train.py --cross-validation
 ```
 
-You can also open tensorboard at http://localhost:6006 to check graphs reporting
-training and test accuracy and AUC.
+You can also open tensorboard at http://localhost:6006 to check graphs the reporting
+training and test accuracy and AUC in real time.
 
 There are no other options apart from these two, but the source code is
 well commented and should be easy to play around with.
+
+## About the implementation
+
+The network is written in tensorflow. Training steps:
+
+1. The first time you run the script, the images in the `data` folder will be
+preprocessed (cropped and scaled) and cached to a `preprocessed` directory.
+If you change the data, you also need to delete the `preprocessed` folder, 
+otherwise it will still use the old data.
+2. After preprocessing the images, the input data is "prepared" which means that
+it is converted to `float32` with zero mean and unit standard deviation and is then
+cached to multiple `input*.npy` files to be easily loaded at training time. As with
+preprocessing, you need to delete the `input*.npy` files after changing the data
+for the new data to be used.
+3. The implementation makes use of the tensorflow Dataset API, to parallelize
+augmentation on multiple CPU cores and training on the GPU.
+4. The Elastic deformation augmentation is implemented using SimpleITK which as
+far as I know is the only public implementation around.
+
+## Results
+
+I report here some training results for comparison.
+
+||||
+
+### Training charts
+
+![Training accuracy](./training_accuracy_1.svg)
+
+![Training AUC](./training_AUC_1.svg)
+
+### Test charts
+
+![Test accuracy](./test_accuracy_1.svg)
+
+![Test AUC](./test_AUC_1.svg)
