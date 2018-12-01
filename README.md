@@ -110,18 +110,32 @@ far as I know is the only public implementation around.
 
 ## Results
 
-I report here some training results for comparison.
+I report here some training results for comparison. I trained on a
+GTX 1050 Ti with 4 GB of memory, while using 8 GB of main memory and
+an old quad-code i5.
 
-||||
+### Montgomery dataset
 
-### Training charts
+These are the results of a 5-fold cross-validation study on the
+Montgomery dataset.
 
+|Run|Epochs|Time|Test accuracy|Test AUC|
+|---|---|---|---|---|
+|1|400|35min|0.7500|0.8333|
+|2|400|35min|0.5714|0.7487|
+|3|400|35min|0.9286|0.9692|
+|4|400|35min|0.8519|0.9618|
+|5|400|35min|0.7037|0.6761|
+|Cross-validation||2h 55min|0.7611|0.8378|
+
+#### Training accuracy
 ![Training accuracy](./results/training_accuracy_1.png)
 
+#### Training AUC
 ![Training AUC](./results/training_AUC_1.png)
 
-### Test charts
-
+#### Test accuracy
 ![Test accuracy](./results/test_accuracy_1.png)
 
+#### Test AUC
 ![Test AUC](./results/test_AUC_1.png)
