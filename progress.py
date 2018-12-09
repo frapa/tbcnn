@@ -2,17 +2,10 @@ import os
 import multiprocessing
 import tensorflow as tf
 
-proc = None
 summary_writer = None
 
-def start_tensorboard_intern():
-    os.system('python3 -m tensorboard.main --logdir=./logs/')
-
 def start_tensorboard():
-    global proc
-
-    proc = multiprocessing.Process(target=start_tensorboard_intern) 
-    proc.start()
+    print('Use `python3 -m tensorboard.main --logdir=./logs/` to visualize accuracy and AUC graphs in real time')
 
 def init_run(_logDir, graph=None):
     global summary_writer
@@ -24,9 +17,6 @@ def init_run(_logDir, graph=None):
         pass
 
     summary_writer = tf.summary.FileWriter(logDir, graph)
-
-def wait_tensorboard():
-    proc.join()
 
 def create_metrics_summary(metrics):
     summaries = []

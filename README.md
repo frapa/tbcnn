@@ -84,8 +84,13 @@ If you want to run a cross-validation study (5-fold), you can run:
 python3 train.py --cross-validation
 ```
 
-You can also open tensorboard at http://localhost:6006 to check graphs the reporting
-training and test accuracy and AUC in real time.
+You can also start a tensorboard server at http://localhost:6006 with
+
+```bash
+python3 -m tensorboard.main --logdir=./logs/
+```
+
+and to check graphs the reporting training and test accuracy and AUC in real time.
 
 There are no other options apart from these two, but the source code is
 well commented and should be easy to play around with.

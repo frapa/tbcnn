@@ -27,15 +27,11 @@ preprocess.preprocess(relPath('data'), relPath('preprocessed'), size=int(SIZE*1.
 print('Preparing input...')
 prepare_input.prepare(relPath('preprocessed'), relPath('input'))
 
-# Start tensorboard
+# print command to start tensorboard
 progress.start_tensorboard()
 
 # Train network
 if '--cross-validation' in sys.argv:
-    train_variants.train_cross_validation(relPath('input'), sets=5, size=SIZE)
+    train_variants.train_cross_validation(relPath('input'), sets=3, size=SIZE)
 else:
     train_variants.train_single(relPath('input'), size=SIZE)
-
-# Wait for user to end tensorboard
-print('Training complete, Ctrl+C to end the tensorboard server')
-progress.wait_tensorboard()

@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 import numpy as np
 import tensorflow as tf
+import gc
 
 import train_loop
 
@@ -86,15 +87,15 @@ def train_single(inFile, size=512):
     print('Training...')
 
     # Load data
-    images = np.load(inFile + '.npy')
-    labels = np.load(inFile + '_labels.npy')
+    images = np.load(inFile + '.npy', mmap_mode='r')
+    labels = np.load(inFile + '_labels.npy', mmap_mode='r')
 
     # Create training and test sets
     training, test = split_train_and_test(images, labels)
 
     train_loop.train_net(training, test, size=size)
 
-def train_cross_validation(inFile, sets=5, size=512):
+def train_cross_validation(inFile, sets=3, size=512):
     """Train network multiple times in a cross validation fashon, in order to
     cover all the dataset in the tests and avoid the effect of outliers.
 
@@ -106,8 +107,8 @@ def train_cross_validation(inFile, sets=5, size=512):
     print('Starting {}-fold cross validation study...'.format(sets))
 
     # Load data
-    images = np.load(inFile + '.npy')
-    labels = np.load(inFile + '_labels.npy')
+    images = np.load(inFile + '.npy', mmap_mode='r')
+    labels = np.load(inFile + '_labels.npy', mmap_mode='r')
 
     # Create training and test sets for the cross validation study
     image_sets, label_sets = create_sets(sets, images, labels)
@@ -123,7 +124,8 @@ def train_cross_validation(inFile, sets=5, size=512):
             training_sets[i],
             test_sets[i],
             size=size,
-            run_name='Set {} ({})'.format(i+1, datetime.now().strftime(r'%Y-%m-%d_%H:%M'))
+            run_name='Set {} ({})'.format(i+1, datetime.now().strftime(r'%Y-%m-%d_%H:%M')),
         )
 
         tf.reset_default_graph()
+        gc.collect()

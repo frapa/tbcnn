@@ -52,6 +52,9 @@ def preprocess(inDir, outDir, size=512):
 
         img = scipy.misc.imread(in_path)
 
+        # If the image is RGB, compress it
+        img = img.mean(2)
+
         # PREPROCESSING
         # Remove black border (sometimes there is a black band)
         img_noborder = remove_border(img)
@@ -63,5 +66,3 @@ def preprocess(inDir, outDir, size=512):
         img_resized = skimage.transform.resize(img_cropped, (size, size), order=3)
 
         scipy.misc.imsave(out_path, img_resized)
-    
-    print()
