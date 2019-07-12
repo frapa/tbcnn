@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def generate_convolutional_block(inp, filters, length=2, pool=True):
+def generate_convolutional_block(inp, filters, length=2, pool=True, stride=1):
     "Generates a convolutional block, with a couple of simple options"
 
     output = inp
@@ -10,6 +10,7 @@ def generate_convolutional_block(inp, filters, length=2, pool=True):
         output = tf.layers.Conv2D(
             filters=filters,
             kernel_size=3,
+            strides=stride,
             padding='same',
             kernel_initializer=tf.keras.initializers.he_normal(),
         )(output)
@@ -20,37 +21,54 @@ def generate_convolutional_block(inp, filters, length=2, pool=True):
         # ReLU
         output = tf.nn.relu(output)
 
+    parallel = tf.layers.Conv2D(
+        filters=filters,
+        kernel_size=1,
+        strides=stride**length,
+        padding='same',
+        kernel_initializer=tf.keras.initializers.he_normal(),
+    )(inp)
+
+    # batch normalization
+    parallel = tf.layers.batch_normalization(parallel)
+
+    # ReLU
+    parallel = tf.nn.relu(parallel)
+
+    output = (output + parallel) / 2
+
     if pool:
         output = tf.layers.MaxPooling2D(
-            pool_size=2,
+            pool_size=3,
             strides=2,
         )(output)
     
     return output
 
-def generate_network(size=512):
+def generate_network(size=512, width=2):
     "Generates a tensorflow graph for the network and returns is"
 
     inp = tf.placeholder(tf.float32, [None, size, size, 1], name='input')
     labels = tf.placeholder(tf.int32, [None], name='labels')
 
     # First convolutiona block with only one 
-    output = generate_convolutional_block(inp, filters=16, length=1)
+    output = generate_convolutional_block(inp, filters=16*width, stride=2)
 
     # 3 "normal" convolutional blocks
-    output = generate_convolutional_block(output, filters=32)
-    output = generate_convolutional_block(output, filters=48)
-    output = generate_convolutional_block(output, filters=64)
+    output = generate_convolutional_block(output, filters=32*width)
+    output = generate_convolutional_block(output, filters=48*width)
+    output = generate_convolutional_block(output, filters=64*width)
 
     # last convolutional block without pooling
-    output = generate_convolutional_block(output, filters=80, pool=False)
+    output = generate_convolutional_block(output, filters=80*width, pool=False)
 
     # Global average pooling
     output = tf.reduce_mean(output, axis=[1,2], name='gap')
+    # output = tf.layers.flatten(output, name='flatten')
 
     # Dense layer for the output, with softmax activation
     logits = tf.layers.Dense(
-        units=2, # 2 outputs
+        units=14, # 14 outputs
         kernel_initializer=tf.keras.initializers.he_normal(),
         name='logits',
     )(output)

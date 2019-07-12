@@ -53,7 +53,8 @@ def preprocess(inDir, outDir, size=512):
         img = scipy.misc.imread(in_path)
 
         # If the image is RGB, compress it
-        img = img.mean(2)
+        if len(img.shape) > 2:
+            img = img.mean(2)
 
         # PREPROCESSING
         # Remove black border (sometimes there is a black band)

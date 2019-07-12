@@ -20,7 +20,7 @@ def relPath(dir):
 # This expects the images to be saved in the data folder
 # Extract 1/4 more for cropping augmentation
 print('Preprocessing...')
-preprocess.preprocess(relPath('data'), relPath('preprocessed'), size=int(SIZE*1.25))
+preprocess.preprocess(relPath('data'), relPath('preprocessed'), size=int(SIZE*1.1))
 
 # Prepare input: convert to float with unit variance and zero mean,
 # extract labels and save everything as a big numpy array to be used for training
