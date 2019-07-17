@@ -45,7 +45,7 @@ def generate_convolutional_block(inp, filters, length=2, pool=True, stride=1):
     
     return output
 
-def generate_network(size=512, width=2):
+def generate_network(size=512, width=1):
     "Generates a tensorflow graph for the network and returns is"
 
     inp = tf.placeholder(tf.float32, [None, size, size, 1], name='input')
