@@ -1,15 +1,36 @@
 # Tuberculosis diagnosis with a CNN
 
 This repo contains the implementation of the convolutional neural network
-for tuberculosis diagnosis described in [paper is coming, hepefully :-)],
+for tuberculosis diagnosis described in
+[Efficient Deep Network Architectures for Fast Chest X-Ray Tuberculosis Screening and Visualization](https://www.nature.com/articles/s41598-019-42557-4),
 which I will call tbcnn for short. The network uses frontal chest X-Rays
 images as input.
+
+## Update 2019-08-06
+
+This code in this repository has now been updated to reflect the published
+version of the paper. In particular the new version has been improve to reduce
+the GFLOP count even further by using an architecture similar to resnet.
+
+Some of the results below have been generated with a
+older version of the network, and therefore do not precisely reflect the
+state of the code anymore (but the results should be reproducible with
+the current code).
+
+**Imporant:** The Belarus data used in the paper was taken by 
+a website of the government of Belarus, which is not available anymore.
+Therefore the data used in the article cannot be downloaded from anywhere,
+making it impossible to reproduce the paper 1:1.
+Luckily, I still have a copy of a pre-processed version of this data
+(already scaled down to 512x512 and center-cropped) that I used
+for training. This data is available in the [belarus folder](/belarus).
+See also [this issue](https://github.com/frapa/tbcnn/issues/1). 
 
 ## Requirements
 
 To run it properly:
 
- * 8 GB of RAM.
+ * 16 GB of RAM.
  * A nvdia GPU with cuda support (even a cheap one).
 
 Training on CPU will be *very* slow.
