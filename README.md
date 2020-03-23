@@ -26,6 +26,11 @@ Luckily, I still have a copy of a pre-processed version of this data
 for training. This data is available in the [belarus folder](/belarus).
 See also [this issue](https://github.com/frapa/tbcnn/issues/1). 
 
+**Note:** Images 2 and 75 of the Belarus dataset (see note above) have been
+reported not to be frontal CXR ([see here](https://github.com/frapa/tbcnn/issues/3)).
+I decided to keep these two images in the dataset for reproducibility
+reasons, but new studies might want to delete them.
+
 ## Requirements
 
 To run it properly:
