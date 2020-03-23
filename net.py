@@ -68,7 +68,7 @@ def generate_network(size=512, width=1):
 
     # Dense layer for the output, with softmax activation
     logits = tf.layers.Dense(
-        units=14, # 14 outputs
+        units=2, # 2 outputs
         kernel_initializer=tf.keras.initializers.he_normal(),
         name='logits',
     )(output)
