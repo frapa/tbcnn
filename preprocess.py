@@ -1,7 +1,7 @@
 import os
 import sys
 import numpy as np
-import scipy.misc
+import imageio
 import skimage.transform
 
 def remove_border(img, threshold=0):
@@ -50,7 +50,7 @@ def preprocess(inDir, outDir, size=512):
 
         print('Preprocessing {} - {} %'.format(f, int(i / num * 100)), end='\r')
 
-        img = scipy.misc.imread(in_path)
+        img = imageio.imread(in_path)
 
         # If the image is RGB, compress it
         if len(img.shape) > 2:
@@ -66,4 +66,4 @@ def preprocess(inDir, outDir, size=512):
         # Resize to final size
         img_resized = skimage.transform.resize(img_cropped, (size, size), order=3)
 
-        scipy.misc.imsave(out_path, img_resized)
+        imageio.imsave(out_path, img_resized)
