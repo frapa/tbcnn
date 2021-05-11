@@ -1,6 +1,5 @@
 tensorflow
 numpy
-scipy
 scikit-image
 SimpleITK
 imageio
