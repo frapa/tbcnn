@@ -1,5 +1,4 @@
 import os
-import multiprocessing
 import tensorflow as tf
 
 summary_writer = None
