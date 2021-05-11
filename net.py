@@ -1,4 +1,6 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+
+tf.disable_v2_behavior()
 
 def generate_convolutional_block(inp, filters, length=2, pool=True, stride=1):
     "Generates a convolutional block, with a couple of simple options"

@@ -4,7 +4,9 @@ import random
 import time
 from datetime import datetime
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+
+tf.disable_v2_behavior()
 
 import net
 from deformations import elastically_deform_image_2d
