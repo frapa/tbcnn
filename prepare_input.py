@@ -1,6 +1,6 @@
 import os
 import numpy as np
-import scipy.misc
+import imageio
 
 def prepare(inDir, outFile):
     """Prepare input: convert to float with unit variance and zero mean,
@@ -26,7 +26,7 @@ def prepare(inDir, outFile):
         name = pieces[1]
         label = int(pieces[2]) # 1 tbc, 0 nothing
 
-        img = scipy.misc.imread(in_path)
+        img = imageio.imread(in_path)
 
         # Convert to float
         img_float = img.astype(np.float32)
