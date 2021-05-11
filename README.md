@@ -64,26 +64,8 @@ sudo apt install cuda9.0 cuda-cublas-9-0 cuda-cufft-9-0 cuda-curand-9-0 \
     cuda-cusolver-9-0 cuda-cusparse-9-0 libcudnn7=7.2.1.38-1+cuda9.0 \
     libnccl2=2.2.13-1+cuda9.0 cuda-command-line-tools-9-0
 
-# tensorflow
-# CPU only (training will take forever, like 1/2 hour per epoch)
-pip3 install --user tensorflow
-# you need a nvidia GPU with CUDA support
-pip3 install --user tensorflow-gpu
-
-# numpy
-pip3 install --user numpy
-
-# scipy
-pip3 install --user scipy
-
-# skimage
-pip3 install --user skimage
-
-# SimpleITK
-pip3 install --user SimpleITK
-
-# tensorboard for real time visualization
-pip3 install --user tensorboard
+# Install dependencies
+pip install -r requirements.txt
 ```
 
 Once we have installed the needed dependencies, we need to download the
